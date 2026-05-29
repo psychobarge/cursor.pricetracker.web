@@ -19,6 +19,7 @@ const snapshotMeta = document.getElementById('snapshotMeta');
 const comparisonEl = document.getElementById('comparison');
 const comparisonHeading = document.getElementById('comparisonHeading');
 const comparisonSnapshotSelect = document.getElementById('comparisonSnapshotSelect');
+const lastCrawlLabel = document.getElementById('lastCrawlLabel');
 
 function init() {
   if (!snapshots.length) {
@@ -27,6 +28,10 @@ function init() {
 
   emptyState.classList.add('hidden');
   app.classList.remove('hidden');
+
+  const latestCrawledAt = snapshots[snapshots.length - 1].crawledAt;
+  lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(latestCrawledAt)}`;
+  lastCrawlLabel.classList.remove('hidden');
 
   const slugs = collectTableSlugs();
   tableSelect.innerHTML = slugs

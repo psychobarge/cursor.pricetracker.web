@@ -48,8 +48,14 @@ h1 {
 
 .subtitle,
 .meta,
-.empty {
+.empty,
+.last-crawl {
   color: var(--muted);
+}
+
+.last-crawl {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
 }
 
 .hidden {
