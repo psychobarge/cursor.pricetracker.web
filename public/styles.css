@@ -49,8 +49,22 @@ h1 {
 .subtitle,
 .meta,
 .empty,
-.last-crawl {
+.last-crawl,
+.crawl-source {
   color: var(--muted);
+}
+
+.crawl-source {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+}
+
+.crawl-source a {
+  color: var(--accent);
+}
+
+.crawl-source a:hover {
+  text-decoration: underline;
 }
 
 .last-crawl {

@@ -20,6 +20,7 @@ const comparisonEl = document.getElementById('comparison');
 const comparisonHeading = document.getElementById('comparisonHeading');
 const comparisonSnapshotSelect = document.getElementById('comparisonSnapshotSelect');
 const lastCrawlLabel = document.getElementById('lastCrawlLabel');
+const crawlSourceLink = document.getElementById('crawlSourceLink');
 
 function init() {
   if (!snapshots.length) {
@@ -29,9 +30,11 @@ function init() {
   emptyState.classList.add('hidden');
   app.classList.remove('hidden');
 
-  const latestCrawledAt = snapshots[snapshots.length - 1].crawledAt;
+  const latestSnapshot = snapshots[snapshots.length - 1];
+  const latestCrawledAt = latestSnapshot.crawledAt;
   lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(latestCrawledAt)}`;
   lastCrawlLabel.classList.remove('hidden');
+  updateCrawlSourceLink(latestSnapshot.sourceUrl);
 
   const slugs = collectTableSlugs();
   tableSelect.innerHTML = slugs
@@ -349,6 +352,30 @@ function formatDateTime(iso) {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+/**
+ * @param {string} sourceUrl
+ */
+function docsPageUrl(sourceUrl) {
+  return sourceUrl.endsWith('.md') ? sourceUrl.slice(0, -3) : sourceUrl;
+}
+
+/**
+ * @param {string} pageUrl
+ */
+function docsPageLabel(pageUrl) {
+  const url = new URL(pageUrl);
+  return `${url.host}${url.pathname.replace(/\/$/, '')}`;
+}
+
+/**
+ * @param {string} sourceUrl
+ */
+function updateCrawlSourceLink(sourceUrl) {
+  const pageUrl = docsPageUrl(sourceUrl);
+  crawlSourceLink.href = pageUrl;
+  crawlSourceLink.textContent = docsPageLabel(pageUrl);
 }
 
 /** Shades per model family (light → dark within family). */
