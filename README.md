@@ -56,11 +56,12 @@ The comparison table shows the latest **model-pricing** snapshot vs the previous
 
 ### Pages (static site)
 
+GitHub branch deploy only supports `/` or `/docs`, not `/public`. This repo uses a **GitHub Actions** deploy workflow ([`.github/workflows/pages.yml`](.github/workflows/pages.yml)).
+
 1. Push this repo to GitHub (public).
 2. **Settings → Pages → Build and deployment**
-   - Source: **Deploy from a branch**
-   - Branch: `main` / folder: **`/public`**
-3. The site redeploys automatically on every push (including crawl commits).
+   - Source: **GitHub Actions** (not “Deploy from a branch”)
+3. Push to `main` (or run **Actions → Deploy Pages → Run workflow**). The site redeploys on every push, including crawl commits.
 
 ### Scheduled crawl (GitHub Actions)
 
