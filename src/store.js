@@ -34,9 +34,6 @@ export function upsertSnapshot(snapshot) {
   if (existingIndex >= 0) {
     const existing = snapshots[existingIndex];
     if (hashTables(existing) === hash) {
-      snapshots[existingIndex] = { ...existing, crawledAt: snapshot.crawledAt };
-      writeSnapshots(snapshots);
-      writeHistoryJs(snapshots);
       return { snapshots, status: 'unchanged' };
     }
     snapshots[existingIndex] = snapshot;
@@ -50,6 +47,35 @@ export function upsertSnapshot(snapshot) {
   writeSnapshots(snapshots);
   writeHistoryJs(snapshots);
   return { snapshots, status: 'created' };
+}
+
+/**
+ * @param {{ lastCrawledAt: string, status: 'created' | 'updated' | 'unchanged', sourceUrl: string }} meta
+ */
+export function writeCrawlMeta(meta) {
+  mkdirSync(dirname(config.crawlMetaJsPath), { recursive: true });
+  const tempPath = `${config.crawlMetaJsPath}.tmp`;
+  const content = `window.CRAWL_META = ${JSON.stringify(meta, null, 2)};\n`;
+  writeFileSync(tempPath, content, 'utf8');
+  renameSync(tempPath, config.crawlMetaJsPath);
+  syncDataScriptVersions(meta.lastCrawledAt);
+}
+
+/**
+ * @param {string} version
+ */
+function syncDataScriptVersions(version) {
+  if (!existsSync(config.indexHtmlPath)) {
+    return;
+  }
+  const encoded = encodeURIComponent(version);
+  const content = readFileSync(config.indexHtmlPath, 'utf8');
+  const updated = content
+    .replace(/src="data\/crawl-meta\.js(?:\?[^"]*)?"/, `src="data/crawl-meta.js?v=${encoded}"`)
+    .replace(/src="data\/history\.js(?:\?[^"]*)?"/, `src="data/history.js?v=${encoded}"`);
+  if (updated !== content) {
+    writeFileSync(config.indexHtmlPath, updated, 'utf8');
+  }
 }
 
 /**

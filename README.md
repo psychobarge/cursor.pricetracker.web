@@ -24,7 +24,8 @@ npm run crawl
 ```
 
 - Appends or updates today’s line in `data/snapshots.jsonl`
-- Regenerates `public/data/history.js` for the UI
+- Regenerates `public/data/history.js` when pricing data changes
+- Always updates `public/data/crawl-meta.js` with the latest crawl time
 
 Example output:
 
@@ -32,7 +33,7 @@ Example output:
 [2026-05-29T09:00:00.000Z] created — auto-pricing(3 rows), model-pricing(39 rows), plans(3 rows)
 ```
 
-Status `unchanged` means today’s pricing tables match the previous crawl; the snapshot’s `crawledAt` is still refreshed to the latest run time.
+Status `unchanged` means today’s pricing tables match the previous crawl; only `public/data/crawl-meta.js` is updated with the latest run time.
 
 ## View charts
 
@@ -42,7 +43,7 @@ Open the static page locally (no `localhost` server):
 open public/index.html
 ```
 
-Or use the GitHub Pages URL above. Reload after each crawl. Use **Cmd+Shift+R** if the browser caches `history.js`.
+Or use the GitHub Pages URL above. Data script URLs are cache-busted automatically after each crawl.
 
 Controls:
 
@@ -68,7 +69,7 @@ GitHub branch deploy only supports `/` or `/docs`, not `/public`. This repo uses
 Workflow: [`.github/workflows/crawl.yml`](.github/workflows/crawl.yml)
 
 - Runs **Monday and Thursday at 11:00 Europe/Paris** (hourly UTC cron with a Paris-time guard for DST)
-- Fetches Cursor pricing, updates `data/snapshots.jsonl` and `public/data/history.js`, then commits and pushes if data changed
+- Fetches Cursor pricing, updates snapshot files when data changes, always refreshes crawl metadata, then commits and pushes if any tracked file changed
 - Manual run: **Actions → Daily crawl → Run workflow**
 
 GitHub Actions cron may start a few minutes late during high load; that is acceptable for a twice-weekly job.
@@ -100,7 +101,8 @@ GitHub Actions cron may start a few minutes late during high load; that is accep
 | File | Role |
 |------|------|
 | `data/snapshots.jsonl` | Source of truth (one JSON object per line per day), versioned in git |
-| `public/data/history.js` | `window.PRICE_SNAPSHOTS` for the static page, regenerated on each crawl |
+| `public/data/history.js` | `window.PRICE_SNAPSHOTS` for the static page, regenerated when pricing data changes |
+| `public/data/crawl-meta.js` | `window.CRAWL_META` with `lastCrawledAt` — updated on every crawl |
 | `data/crawl.log` | Optional local crontab stderr/stdout (gitignored) |
 
 ## Tests

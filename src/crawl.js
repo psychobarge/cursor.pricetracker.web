@@ -1,6 +1,6 @@
 import { parsePricingMarkdown, validateSnapshot } from './parse-markdown-tables.js';
 import { config } from './config.js';
-import { upsertSnapshot } from './store.js';
+import { upsertSnapshot, writeCrawlMeta } from './store.js';
 
 async function main() {
   const response = await fetch(config.docsMdUrl, {
@@ -21,6 +21,11 @@ async function main() {
   }
 
   const { status } = upsertSnapshot(snapshot);
+  writeCrawlMeta({
+    lastCrawledAt: snapshot.crawledAt,
+    status,
+    sourceUrl: snapshot.sourceUrl,
+  });
   const tableSummary = snapshot.tables
     .map((t) => `${t.slug}(${t.rows.length} rows)`)
     .join(', ');

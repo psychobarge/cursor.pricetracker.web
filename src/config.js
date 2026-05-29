@@ -14,6 +14,8 @@ export const config = {
   docsMdUrl: process.env.DOCS_MD_URL || DEFAULT_DOCS_URL,
   snapshotsPath: join(ROOT, 'data', 'snapshots.jsonl'),
   historyJsPath: join(ROOT, 'public', 'data', 'history.js'),
+  crawlMetaJsPath: join(ROOT, 'public', 'data', 'crawl-meta.js'),
+  indexHtmlPath: join(ROOT, 'public', 'index.html'),
 };
 
 /**

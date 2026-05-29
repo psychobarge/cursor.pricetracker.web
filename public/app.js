@@ -1,5 +1,7 @@
 /** @type {Array<{ crawledAt: string, sourceUrl: string, tables: Array<{ slug: string, title: string, columns: string[], rows: Record<string, unknown>[] }> }>} */
 const snapshots = window.PRICE_SNAPSHOTS || [];
+/** @type {{ lastCrawledAt?: string, status?: string, sourceUrl?: string }} */
+const crawlMeta = window.CRAWL_META || {};
 
 const TABLE_ROW_KEYS = {
   'auto-pricing': 'tokenType',
@@ -23,6 +25,14 @@ const lastCrawlLabel = document.getElementById('lastCrawlLabel');
 const crawlSourceLink = document.getElementById('crawlSourceLink');
 
 function init() {
+  if (crawlMeta.lastCrawledAt) {
+    lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(crawlMeta.lastCrawledAt)}`;
+    lastCrawlLabel.classList.remove('hidden');
+    if (crawlMeta.sourceUrl) {
+      updateCrawlSourceLink(crawlMeta.sourceUrl);
+    }
+  }
+
   if (!snapshots.length) {
     return;
   }
@@ -31,10 +41,11 @@ function init() {
   app.classList.remove('hidden');
 
   const latestSnapshot = snapshots[snapshots.length - 1];
-  const latestCrawledAt = latestSnapshot.crawledAt;
-  lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(latestCrawledAt)}`;
-  lastCrawlLabel.classList.remove('hidden');
-  updateCrawlSourceLink(latestSnapshot.sourceUrl);
+  if (!crawlMeta.lastCrawledAt) {
+    lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(latestSnapshot.crawledAt)}`;
+    lastCrawlLabel.classList.remove('hidden');
+    updateCrawlSourceLink(latestSnapshot.sourceUrl);
+  }
 
   const slugs = collectTableSlugs();
   tableSelect.innerHTML = slugs
