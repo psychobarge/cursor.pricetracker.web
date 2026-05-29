@@ -2,7 +2,7 @@ name: Daily crawl
 
 on:
   schedule:
-    # Hourly UTC; crawl runs only at 08:00 Europe/Paris (handles DST).
+    # Hourly UTC; crawl runs only Mon/Thu at 11:00 Europe/Paris (handles DST).
     - cron: '0 * * * *'
   workflow_dispatch:
 
@@ -21,11 +21,12 @@ jobs:
             exit 0
           fi
           HOUR=$(TZ=Europe/Paris date +%H)
-          if [ "$HOUR" = "08" ]; then
+          DOW=$(TZ=Europe/Paris date +%u)
+          if [ "$HOUR" = "11" ] && { [ "$DOW" = "1" ] || [ "$DOW" = "4" ]; }; then
             echo "run=true" >> "$GITHUB_OUTPUT"
           else
             echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping crawl (Paris hour is $HOUR, not 08)."
+            echo "Skipping crawl (Paris: day=$DOW hour=$HOUR; expected Mon/Thu at 11)."
           fi
 
       - name: Checkout
