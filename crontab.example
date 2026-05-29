@@ -1,0 +1,5 @@
+# Daily crawl at 08:00 (Europe/Paris). Edit paths with: which node, pwd
+# Install: crontab -e — paste the line below (without leading #)
+#
+# TZ=Europe/Paris
+# 0 8 * * * cd /Users/mpicard/cursor.pricetracker.web && /usr/local/bin/node src/crawl.js >> /Users/mpicard/cursor.pricetracker.web/data/crawl.log 2>&1

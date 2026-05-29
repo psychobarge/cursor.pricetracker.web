@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cursor Price Tracker</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Cursor Price Tracker</h1>
+      <p class="subtitle">
+        Pricing data is updated daily around 08:00 Europe/Paris. Reload this page to see the latest snapshot.
+      </p>
+    </header>
+
+    <main id="app" class="hidden">
+      <section class="controls">
+        <label>
+          Table
+          <select id="tableSelect"></select>
+        </label>
+        <label>
+          Metric
+          <select id="metricSelect"></select>
+        </label>
+        <label>
+          Series
+          <select id="seriesSelect" multiple size="8"></select>
+        </label>
+      </section>
+
+      <section class="chart-wrap">
+        <canvas id="priceChart"></canvas>
+      </section>
+
+      <section class="comparison-section">
+        <div class="comparison-header">
+          <h2 id="comparisonHeading">Latest vs previous</h2>
+          <label class="comparison-snapshot-label">
+            Snapshot
+            <select id="comparisonSnapshotSelect">
+              <option value="">Default (latest vs previous)</option>
+            </select>
+          </label>
+        </div>
+        <div id="comparison" class="comparison"></div>
+      </section>
+
+      <section>
+        <h2>Snapshots</h2>
+        <p id="snapshotMeta" class="meta"></p>
+      </section>
+    </main>
+
+    <p id="emptyState" class="empty">
+      No data yet. The daily crawl will populate this page once snapshots are available.
+    </p>
+
+    <script src="data/history.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "cursor-pricetracker",
+  "version": "1.0.0",
+  "description": "Daily crawl of Cursor model pricing with static chart viewer",
+  "type": "module",
+  "scripts": {
+    "crawl": "node src/crawl.js",
+    "test": "node --test src/**/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
