@@ -1,6 +1,6 @@
 window.PRICE_SNAPSHOTS = [
   {
-    "crawledAt": "2026-05-29T09:14:57.394Z",
+    "crawledAt": "2026-05-29T14:18:38.166Z",
     "sourceUrl": "https://cursor.com/docs/models-and-pricing.md",
     "tables": [
       {
