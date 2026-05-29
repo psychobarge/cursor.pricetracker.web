@@ -34,6 +34,9 @@ export function upsertSnapshot(snapshot) {
   if (existingIndex >= 0) {
     const existing = snapshots[existingIndex];
     if (hashTables(existing) === hash) {
+      snapshots[existingIndex] = { ...existing, crawledAt: snapshot.crawledAt };
+      writeSnapshots(snapshots);
+      writeHistoryJs(snapshots);
       return { snapshots, status: 'unchanged' };
     }
     snapshots[existingIndex] = snapshot;

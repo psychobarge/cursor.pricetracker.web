@@ -32,7 +32,7 @@ Example output:
 [2026-05-29T09:00:00.000Z] created — auto-pricing(3 rows), model-pricing(39 rows), plans(3 rows)
 ```
 
-Status `unchanged` means today’s data matches the previous crawl (hash of tables).
+Status `unchanged` means today’s pricing tables match the previous crawl; the snapshot’s `crawledAt` is still refreshed to the latest run time.
 
 ## View charts
 
