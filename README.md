@@ -62,7 +62,7 @@ GitHub branch deploy only supports `/` or `/docs`, not `/public`. This repo uses
 1. Push this repo to GitHub (public).
 2. **Settings → Pages → Build and deployment**
    - Source: **GitHub Actions** (not “Deploy from a branch”)
-3. Push to `main` (or run **Actions → Deploy Pages → Run workflow**). The site redeploys on every push, including crawl commits.
+3. Push to `main` (or run **Actions → Deploy Pages → Run workflow**). The site redeploys on every push to `main`.
 
 ### Scheduled crawl (GitHub Actions)
 
@@ -70,6 +70,7 @@ Workflow: [`.github/workflows/crawl.yml`](.github/workflows/crawl.yml)
 
 - Runs **daily at 11:00 Europe/Paris** (hourly UTC cron with a Paris-time guard for DST)
 - Fetches Cursor pricing, updates snapshot files when data changes, always refreshes crawl metadata, then commits and pushes
+- **Deploys GitHub Pages** after each successful crawl (crawl pushes use `GITHUB_TOKEN`, which does not trigger other workflows)
 - Manual run: **Actions → Daily crawl → Run workflow**
 
 GitHub Actions cron may start a few minutes late during high load; that is acceptable for a daily job.

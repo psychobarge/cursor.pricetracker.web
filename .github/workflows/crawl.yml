@@ -6,12 +6,13 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
-permissions:
-    contents: write
-
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      run: ${{ steps.schedule.outputs.run }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -24,8 +25,8 @@ jobs:
             exit 0
           fi
           TODAY=$(TZ=Europe/Paris date +%Y-%m-%d)
-          LAST_DATE=$(grep -o '"lastCrawledAt":"[^"]*"' public/data/crawl-meta.js \
-            | grep -o '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}')
+          LAST_DATE=$(grep -oE '"lastCrawledAt":\s*"[^"]*"' public/data/crawl-meta.js \
+            | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}')
           if [ "$LAST_DATE" = "$TODAY" ]; then
             echo "run=false" >> "$GITHUB_OUTPUT"
             echo "Already crawled today ($TODAY). Skipping."
@@ -57,3 +58,32 @@ jobs:
           CRAWL_DATE=$(TZ=Europe/Paris date +%Y-%m-%dT%H:%M:%S%z)
           git commit -m "chore: crawl at ${CRAWL_DATE}"
           git push
+
+  deploy:
+    needs: crawl
+    if: needs.crawl.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
