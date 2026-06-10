@@ -68,11 +68,11 @@ GitHub branch deploy only supports `/` or `/docs`, not `/public`. This repo uses
 
 Workflow: [`.github/workflows/crawl.yml`](.github/workflows/crawl.yml)
 
-- Runs **Monday and Thursday at 11:00 Europe/Paris** (hourly UTC cron with a Paris-time guard for DST)
-- Fetches Cursor pricing, updates snapshot files when data changes, always refreshes crawl metadata, then commits and pushes if any tracked file changed
+- Runs **daily at 11:00 Europe/Paris** (hourly UTC cron with a Paris-time guard for DST)
+- Fetches Cursor pricing, updates snapshot files when data changes, always refreshes crawl metadata, then commits and pushes
 - Manual run: **Actions → Daily crawl → Run workflow**
 
-GitHub Actions cron may start a few minutes late during high load; that is acceptable for a twice-weekly job.
+GitHub Actions cron may start a few minutes late during high load; that is acceptable for a daily job.
 
 ## macOS crontab (optional local backup)
 
@@ -89,7 +89,7 @@ GitHub Actions cron may start a few minutes late during high load; that is accep
 
    ```cron
    TZ=Europe/Paris
-   0 11 * * 1,4 cd /Users/you/cursor.pricetracker.web && /opt/homebrew/bin/node src/crawl.js >> /Users/you/cursor.pricetracker.web/data/crawl.log 2>&1
+   0 11 * * * cd /Users/you/cursor.pricetracker.web && /opt/homebrew/bin/node src/crawl.js >> /Users/you/cursor.pricetracker.web/data/crawl.log 2>&1
    ```
 
 4. Test manually first: `npm run crawl`

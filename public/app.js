@@ -26,7 +26,8 @@ const crawlSourceLink = document.getElementById('crawlSourceLink');
 
 function init() {
   if (crawlMeta.lastCrawledAt) {
-    lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(crawlMeta.lastCrawledAt)}`;
+    const suffix = crawlMeta.status === 'unchanged' ? ' (no price changes)' : '';
+    lastCrawlLabel.textContent = `Last crawled on ${formatDateTime(crawlMeta.lastCrawledAt)}${suffix}`;
     lastCrawlLabel.classList.remove('hidden');
     if (crawlMeta.sourceUrl) {
       updateCrawlSourceLink(crawlMeta.sourceUrl);
