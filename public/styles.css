@@ -165,6 +165,34 @@ th {
   color: #f85149;
 }
 
+:root {
+  --price-cheap: rgb(63 185 80 / 0.14);
+  --price-expensive: rgb(248 130 73 / 0.18);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --price-cheap: rgb(46 160 67 / 0.12);
+    --price-expensive: rgb(218 100 50 / 0.16);
+  }
+}
+
+td.price-cell-cheap {
+  background-color: color-mix(
+    in srgb,
+    transparent calc((1 - var(--price-intensity)) * 100%),
+    var(--price-cheap) calc(var(--price-intensity) * 100%)
+  );
+}
+
+td.price-cell-expensive {
+  background-color: color-mix(
+    in srgb,
+    transparent calc((1 - var(--price-intensity)) * 100%),
+    var(--price-expensive) calc(var(--price-intensity) * 100%)
+  );
+}
+
 code {
   font-size: 0.9em;
   background: var(--panel);

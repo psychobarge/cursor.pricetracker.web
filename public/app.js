@@ -177,6 +177,59 @@ function metricValue(row, metric) {
   return null;
 }
 
+const HIGHLIGHT_COUNT = 8;
+
+/**
+ * Returns a map keyed by `${metric}:${model}` with tier and intensity for the
+ * top/bottom HIGHLIGHT_COUNT values in each metric column.
+ * @param {Record<string, unknown>[]} rows
+ * @param {string[]} metrics
+ * @returns {Map<string, { tier: 'cheap' | 'expensive', intensity: number }>}
+ */
+function buildPriceHighlightMap(rows, metrics) {
+  /** @type {Map<string, { tier: 'cheap' | 'expensive', intensity: number }>} */
+  const map = new Map();
+
+  for (const metric of metrics) {
+    /** @type {{ model: string, value: number }[]} */
+    const entries = [];
+    for (const row of rows) {
+      const value = metricValue(row, metric);
+      if (value == null) continue;
+      entries.push({ model: String(row.model ?? ''), value });
+    }
+
+    if (entries.length === 0) continue;
+
+    entries.sort((a, b) => a.value - b.value);
+
+    const count = Math.min(HIGHLIGHT_COUNT, entries.length);
+    const denominator = count > 1 ? count - 1 : 1;
+
+    // Bottom N = cheapest
+    for (let rank = 0; rank < count; rank++) {
+      const { model } = entries[rank];
+      map.set(`${metric}:${model}`, {
+        tier: 'cheap',
+        intensity: 1 - rank / denominator,
+      });
+    }
+
+    // Top N = most expensive (iterate from the end)
+    for (let rank = 0; rank < count; rank++) {
+      const { model } = entries[entries.length - 1 - rank];
+      const key = `${metric}:${model}`;
+      // expensive takes priority when the tiers overlap
+      map.set(key, {
+        tier: 'expensive',
+        intensity: 1 - rank / denominator,
+      });
+    }
+  }
+
+  return map;
+}
+
 function renderChart() {
   const slug = tableSelect.value;
   const metric = metricSelect.value;
@@ -271,6 +324,8 @@ function renderComparison() {
   }
   html += '</tr></thead><tbody>';
 
+  const highlights = buildPriceHighlightMap(currentTable.rows, metrics);
+
   for (const row of currentTable.rows) {
     const name = String(row.model ?? '');
     const prevRow = prevTable?.rows.find((r) => r.model === row.model);
@@ -279,7 +334,10 @@ function renderComparison() {
       const cur = metricValue(row, m);
       const prev = prevRow ? metricValue(prevRow, m) : null;
       const delta = formatDelta(prev, cur);
-      html += `<td>${cur ?? '—'}</td><td class="${delta.class}">${delta.text}</td>`;
+      const highlight = highlights.get(`${m}:${name}`);
+      const priceClass = highlight ? ` class="price-cell-${highlight.tier}"` : '';
+      const priceStyle = highlight ? ` style="--price-intensity:${highlight.intensity.toFixed(3)}"` : '';
+      html += `<td${priceClass}${priceStyle}>${cur ?? '—'}</td><td class="${delta.class}">${delta.text}</td>`;
     }
     html += '</tr>';
   }
