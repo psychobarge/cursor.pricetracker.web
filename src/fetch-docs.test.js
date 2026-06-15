@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   fetchDocsMarkdown,
+  fetchStrategyForAttempt,
   isRetryableStatus,
   retryDelayMs,
 } from './fetch-docs.js';
@@ -21,10 +22,18 @@ function mockResponse(status, body = '', headers = {}) {
 }
 
 describe('fetch-docs helpers', () => {
-  it('retryDelayMs uses exponential backoff from 30s', () => {
-    assert.equal(retryDelayMs(1), 30_000);
-    assert.equal(retryDelayMs(2), 60_000);
-    assert.equal(retryDelayMs(3), 120_000);
+  it('retryDelayMs uses short delays first, then longer backoff', () => {
+    assert.equal(retryDelayMs(1), 2_000);
+    assert.equal(retryDelayMs(2), 5_000);
+    assert.equal(retryDelayMs(3), 10_000);
+    assert.equal(retryDelayMs(4), 30_000);
+  });
+
+  it('fetchStrategyForAttempt rotates through header strategies', () => {
+    assert.equal(fetchStrategyForAttempt(1).label, 'Accept: text/markdown');
+    assert.equal(fetchStrategyForAttempt(2).label, 'default headers');
+    assert.equal(fetchStrategyForAttempt(3).label, 'Accept: text/plain');
+    assert.equal(fetchStrategyForAttempt(4).label, 'Accept: text/markdown');
   });
 
   it('isRetryableStatus covers transient errors including 404', () => {
@@ -37,7 +46,7 @@ describe('fetch-docs helpers', () => {
 describe('fetchDocsMarkdown', () => {
   it('succeeds on second attempt after a 404', async () => {
     let calls = 0;
-    const fetchFn = async () => {
+    const fetchFn = async (_url, init) => {
       calls += 1;
       if (calls === 1) {
         return mockResponse(404, '{"error":"missing"}', {
@@ -51,7 +60,7 @@ describe('fetchDocsMarkdown', () => {
     const markdown = await fetchDocsMarkdown('https://example.com/docs.md', {
       fetchFn,
       delayFn: async () => {},
-      maxAttempts: 4,
+      maxAttempts: 6,
     });
 
     assert.equal(markdown, '# Models & Pricing\n');
@@ -93,9 +102,9 @@ describe('fetchDocsMarkdown', () => {
         fetchDocsMarkdown('https://example.com/docs.md', {
           fetchFn,
           delayFn: async () => {},
-          maxAttempts: 4,
+          maxAttempts: 6,
         }),
-      /Fetch failed after 4 attempt/,
+      /Fetch failed after 6 attempt/,
     );
 
     assert.equal(calls, 1);
