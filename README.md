@@ -68,12 +68,12 @@ GitHub branch deploy only supports `/` or `/docs`, not `/public`. This repo uses
 
 Workflow: [`.github/workflows/crawl.yml`](.github/workflows/crawl.yml)
 
-- Runs **daily at 11:00 Europe/Paris** (hourly UTC cron with a Paris-time guard for DST)
+- Runs **several times per day** on an hourly cron (actual start time varies with GitHub load)
+- Skips further runs only after a **successful** crawl for the current **Europe/Paris calendar day**; failed runs leave metadata unchanged and are retried on the next scheduled run
+- Retries transient HTTP errors (including 404) automatically within each crawl attempt
 - Fetches Cursor pricing, updates snapshot files when data changes, always refreshes crawl metadata, then commits and pushes
 - **Deploys GitHub Pages** after each successful crawl (crawl pushes use `GITHUB_TOKEN`, which does not trigger other workflows)
-- Manual run: **Actions → Daily crawl → Run workflow**
-
-GitHub Actions cron may start a few minutes late during high load; that is acceptable for a daily job.
+- Manual run: **Actions → Daily crawl → Run workflow** (`force` enabled by default)
 
 ## macOS crontab (optional local backup)
 

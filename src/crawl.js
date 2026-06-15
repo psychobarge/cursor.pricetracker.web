@@ -1,18 +1,10 @@
 import { parsePricingMarkdown, validateSnapshot } from './parse-markdown-tables.js';
 import { config } from './config.js';
 import { upsertSnapshot, writeCrawlMeta } from './store.js';
+import { fetchDocsMarkdown } from './fetch-docs.js';
 
 async function main() {
-  const response = await fetch(config.docsMdUrl, {
-    headers: { Accept: 'text/markdown, text/plain, */*' },
-  });
-
-  if (!response.ok) {
-    console.error(`Fetch failed: ${response.status} ${response.statusText}`);
-    process.exit(1);
-  }
-
-  const markdown = await response.text();
+  const markdown = await fetchDocsMarkdown(config.docsMdUrl);
   const snapshot = parsePricingMarkdown(markdown, config.docsMdUrl);
 
   if (!validateSnapshot(snapshot)) {
