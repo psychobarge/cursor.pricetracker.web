@@ -3525,5 +3525,447 @@ window.PRICE_SNAPSHOTS = [
         ]
       }
     ]
+  },
+  {
+    "crawledAt": "2026-06-17T23:25:44.605Z",
+    "sourceUrl": "https://cursor.com/docs/models-and-pricing.md",
+    "tables": [
+      {
+        "slug": "auto-pricing",
+        "title": "Auto pricing",
+        "columns": [
+          "tokenType",
+          "pricePer1MTokens"
+        ],
+        "rows": [
+          {
+            "tokenType": "Input + Cache Write",
+            "pricePer1MTokens": 1.25
+          },
+          {
+            "tokenType": "Output",
+            "pricePer1MTokens": 6
+          },
+          {
+            "tokenType": "Cache Read",
+            "pricePer1MTokens": 0.25
+          }
+        ]
+      },
+      {
+        "slug": "model-pricing",
+        "title": "Model pricing",
+        "columns": [
+          "model",
+          "provider",
+          "input",
+          "cacheWrite",
+          "cacheRead",
+          "output",
+          "notes"
+        ],
+        "rows": [
+          {
+            "model": "Claude 4 Sonnet",
+            "provider": "Anthropic",
+            "input": 3,
+            "cacheWrite": 3.75,
+            "cacheRead": 0.3,
+            "output": 15,
+            "notes": "Hidden by default; Thinking variant counts as 2 requests in legacy pricing"
+          },
+          {
+            "model": "Claude 4 Sonnet 1M",
+            "provider": "Anthropic",
+            "input": 6,
+            "cacheWrite": 7.5,
+            "cacheRead": 0.6,
+            "output": 22.5,
+            "notes": "Hidden by default; Thinking variant counts as 2 requests in legacy pricing; This model can be very expensive due to the large context window; The cost is 2x when the input exceeds 200k tokens"
+          },
+          {
+            "model": "Claude 4.5 Haiku",
+            "provider": "Anthropic",
+            "input": 1,
+            "cacheWrite": 1.25,
+            "cacheRead": 0.1,
+            "output": 5,
+            "notes": "Hidden by default; Bedrock/Vertex: regional endpoints +10% surcharge; Cache: writes 1.25x, reads 0.1x"
+          },
+          {
+            "model": "Claude 4.5 Opus",
+            "provider": "Anthropic",
+            "input": 5,
+            "cacheWrite": 6.25,
+            "cacheRead": 0.5,
+            "output": 25,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans"
+          },
+          {
+            "model": "Claude 4.5 Sonnet",
+            "provider": "Anthropic",
+            "input": 3,
+            "cacheWrite": 3.75,
+            "cacheRead": 0.3,
+            "output": 15,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans; Up to 1M tokens in Max Mode at the same per-token rates (no long-context surcharge)"
+          },
+          {
+            "model": "Claude 4.6 Opus",
+            "provider": "Anthropic",
+            "input": 5,
+            "cacheWrite": 6.25,
+            "cacheRead": 0.5,
+            "output": 25,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans; Up to 1M tokens in Max Mode at the same per-token rates (no long-context surcharge)"
+          },
+          {
+            "model": "Claude 4.6 Opus (Fast mode)",
+            "provider": "Anthropic",
+            "input": 30,
+            "cacheWrite": 37.5,
+            "cacheRead": 3,
+            "output": 150,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans; Limited research preview; Up to 1M tokens in Max Mode at the same per-token rates as shorter context"
+          },
+          {
+            "model": "Claude 4.6 Sonnet",
+            "provider": "Anthropic",
+            "input": 3,
+            "cacheWrite": 3.75,
+            "cacheRead": 0.3,
+            "output": 15,
+            "notes": "Requires Max Mode on request-based plans; Up to 1M tokens in Max Mode at the same per-token rates (no long-context surcharge)"
+          },
+          {
+            "model": "Claude 4.7 Opus",
+            "provider": "Anthropic",
+            "input": 5,
+            "cacheWrite": 6.25,
+            "cacheRead": 0.5,
+            "output": 25,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans; Up to 1M tokens in Max Mode at the same per-token rates (no long-context surcharge)"
+          },
+          {
+            "model": "Claude Fable 5",
+            "provider": "Anthropic",
+            "input": 10,
+            "cacheWrite": 12.5,
+            "cacheRead": 1,
+            "output": 50,
+            "notes": "Requires data retention approval for Enterprise customers, Teams and individual customers with Privacy Mode enabled; Anthropic stores agent input and output data for harm-prevention processes; this data is not used to train or improve Anthropic models or products; Requests that trip a security guardrail are automatically routed to Claude Opus; About 2x the cost of Claude Opus 4.8; Requires Max Mode on request-based plans"
+          },
+          {
+            "model": "Claude Opus 4.7 (fast mode)",
+            "provider": "Anthropic",
+            "input": 30,
+            "cacheWrite": 37.5,
+            "cacheRead": 3,
+            "output": 150,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans; Limited research preview; Up to 1M tokens in Max Mode at the same per-token rates as shorter context"
+          },
+          {
+            "model": "Claude Opus 4.8",
+            "provider": "Anthropic",
+            "input": 5,
+            "cacheWrite": 6.25,
+            "cacheRead": 0.5,
+            "output": 25,
+            "notes": "Requires Max Mode on request-based plans; Fast mode (\\`claude-opus-4-8-fast\\`) requires Max Mode; Fast mode is 3x lower per-token pricing than Opus 4.7 fast mode; Up to 1M tokens in Max Mode at the same per-token rates (no long-context surcharge)"
+          },
+          {
+            "model": "Composer 1",
+            "provider": "Cursor",
+            "input": 1.25,
+            "cacheWrite": null,
+            "cacheRead": 0.125,
+            "output": 10,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "Composer 1.5",
+            "provider": "Cursor",
+            "input": 3.5,
+            "cacheWrite": null,
+            "cacheRead": 0.35,
+            "output": 17.5,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "Composer 2",
+            "provider": "Cursor",
+            "input": 0.5,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 2.5,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "Composer 2.5",
+            "provider": "Cursor",
+            "input": 0.5,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 2.5,
+            "notes": null
+          },
+          {
+            "model": "Gemini 2.5 Flash",
+            "provider": "Google",
+            "input": 0.3,
+            "cacheWrite": null,
+            "cacheRead": 0.03,
+            "output": 2.5,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "Gemini 3 Flash",
+            "provider": "Google",
+            "input": 0.5,
+            "cacheWrite": null,
+            "cacheRead": 0.05,
+            "output": 3,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "Gemini 3 Pro",
+            "provider": "Google",
+            "input": 2,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 12,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "Gemini 3 Pro Image Preview",
+            "provider": "Google",
+            "input": 2,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 12,
+            "notes": "Hidden by default; Native image generation model optimized for speed, flexibility, and contextual understanding; Text input and output priced the same as Gemini 3 Pro; Image output: $120/1M tokens (\\~$0.134 per 1K/2K image, \\~$0.24 per 4K image); Preview models may change before becoming stable and have more restrictive rate limits"
+          },
+          {
+            "model": "Gemini 3.1 Pro",
+            "provider": "Google",
+            "input": 2,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 12,
+            "notes": null
+          },
+          {
+            "model": "Gemini 3.5 Flash",
+            "provider": "Google",
+            "input": 1.5,
+            "cacheWrite": null,
+            "cacheRead": 0.15,
+            "output": 9,
+            "notes": null
+          },
+          {
+            "model": "GPT-5",
+            "provider": "OpenAI",
+            "input": 1.25,
+            "cacheWrite": null,
+            "cacheRead": 0.125,
+            "output": 10,
+            "notes": "Hidden by default; Agentic and reasoning capabilities; Available reasoning effort variant is gpt-5-high"
+          },
+          {
+            "model": "GPT-5 Fast",
+            "provider": "OpenAI",
+            "input": 2.5,
+            "cacheWrite": null,
+            "cacheRead": 0.25,
+            "output": 20,
+            "notes": "Hidden by default; Faster speed but 2x price; Available reasoning effort variants are gpt-5-high-fast, gpt-5-low-fast"
+          },
+          {
+            "model": "GPT-5 Mini",
+            "provider": "OpenAI",
+            "input": 0.25,
+            "cacheWrite": null,
+            "cacheRead": 0.025,
+            "output": 2,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "GPT-5-Codex",
+            "provider": "OpenAI",
+            "input": 1.25,
+            "cacheWrite": null,
+            "cacheRead": 0.125,
+            "output": 10,
+            "notes": "Hidden by default; Agentic and reasoning capabilities"
+          },
+          {
+            "model": "GPT-5.1 Codex",
+            "provider": "OpenAI",
+            "input": 1.25,
+            "cacheWrite": null,
+            "cacheRead": 0.125,
+            "output": 10,
+            "notes": "Hidden by default; Agentic and reasoning capabilities"
+          },
+          {
+            "model": "GPT-5.1 Codex Max",
+            "provider": "OpenAI",
+            "input": 1.25,
+            "cacheWrite": null,
+            "cacheRead": 0.125,
+            "output": 10,
+            "notes": "Hidden by default"
+          },
+          {
+            "model": "GPT-5.1 Codex Mini",
+            "provider": "OpenAI",
+            "input": 0.25,
+            "cacheWrite": null,
+            "cacheRead": 0.025,
+            "output": 2,
+            "notes": "Hidden by default; Agentic and reasoning capabilities; 4x rate limits compared to GPT-5.1 Codex"
+          },
+          {
+            "model": "GPT-5.2",
+            "provider": "OpenAI",
+            "input": 1.75,
+            "cacheWrite": null,
+            "cacheRead": 0.175,
+            "output": 14,
+            "notes": "Hidden by default; Agentic and reasoning capabilities; Available reasoning effort variant is gpt-5.2-high"
+          },
+          {
+            "model": "GPT-5.2 Codex",
+            "provider": "OpenAI",
+            "input": 1.75,
+            "cacheWrite": null,
+            "cacheRead": 0.175,
+            "output": 14,
+            "notes": "Hidden by default; Agentic and reasoning capabilities"
+          },
+          {
+            "model": "GPT-5.3 Codex",
+            "provider": "OpenAI",
+            "input": 1.75,
+            "cacheWrite": null,
+            "cacheRead": 0.175,
+            "output": 14,
+            "notes": "Requires Max Mode on request-based plans; Agentic and reasoning capabilities; Available reasoning effort variant is gpt-5.3-codex-high"
+          },
+          {
+            "model": "GPT-5.4",
+            "provider": "OpenAI",
+            "input": 2.5,
+            "cacheWrite": null,
+            "cacheRead": 0.25,
+            "output": 15,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans; Agentic and reasoning capabilities; 90% discount on cached input tokens; Fast mode is 15% faster with 2x pricing; Long context (Max Mode) supports up to 1M tokens with 2x input pricing"
+          },
+          {
+            "model": "GPT-5.4 Mini",
+            "provider": "OpenAI",
+            "input": 0.75,
+            "cacheWrite": null,
+            "cacheRead": 0.075,
+            "output": 4.5,
+            "notes": "Hidden by default; Smaller, faster variant of GPT-5.4; 90% discount on cached input tokens"
+          },
+          {
+            "model": "GPT-5.4 Nano",
+            "provider": "OpenAI",
+            "input": 0.2,
+            "cacheWrite": null,
+            "cacheRead": 0.02,
+            "output": 1.25,
+            "notes": "Hidden by default; Smallest GPT-5.4 variant, optimized for cost; 90% discount on cached input tokens"
+          },
+          {
+            "model": "GPT-5.5",
+            "provider": "OpenAI",
+            "input": 5,
+            "cacheWrite": null,
+            "cacheRead": 0.5,
+            "output": 30,
+            "notes": "Requires Max Mode on request-based plans; Agentic and reasoning capabilities; More token-efficient than GPT-5.4 on comparable tasks; Improved persistence on long-running tasks; Fast mode is available at higher rates; Long context (Max Mode) supports up to 1M tokens with 2x input pricing"
+          },
+          {
+            "model": "Grok 4.20",
+            "provider": "xAI",
+            "input": 2,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 6,
+            "notes": "Hidden by default; The cost is 2x when the input exceeds 200k tokens"
+          },
+          {
+            "model": "Grok 4.3",
+            "provider": "xAI",
+            "input": 1.25,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 2.5,
+            "notes": "Hidden by default; Requires Max Mode on request-based plans"
+          },
+          {
+            "model": "Grok Build 0.1",
+            "provider": "xAI",
+            "input": 1,
+            "cacheWrite": null,
+            "cacheRead": 0.2,
+            "output": 2,
+            "notes": "The cost is 2x when the input exceeds 200k tokens; No user-configurable reasoning effort"
+          },
+          {
+            "model": "Kimi K2.5",
+            "provider": "Moonshot",
+            "input": 0.6,
+            "cacheWrite": null,
+            "cacheRead": 0.1,
+            "output": 3,
+            "notes": "Hidden by default"
+          }
+        ]
+      },
+      {
+        "slug": "plans",
+        "title": "Plans",
+        "columns": [
+          "plan",
+          "price",
+          "apiUsageIncluded",
+          "autoPlusComposer"
+        ],
+        "rows": [
+          {
+            "plan": "**Pro**",
+            "price": {
+              "priceLabel": "$20/mo",
+              "priceMonthly": 20
+            },
+            "apiUsageIncluded": 20,
+            "autoPlusComposer": "Generous included usage"
+          },
+          {
+            "plan": "**Pro Plus**",
+            "price": {
+              "priceLabel": "$60/mo",
+              "priceMonthly": 60
+            },
+            "apiUsageIncluded": 70,
+            "autoPlusComposer": "Generous included usage"
+          },
+          {
+            "plan": "**Ultra**",
+            "price": {
+              "priceLabel": "$200/mo",
+              "priceMonthly": 200
+            },
+            "apiUsageIncluded": 400,
+            "autoPlusComposer": "Generous included usage"
+          }
+        ]
+      }
+    ]
   }
 ];
