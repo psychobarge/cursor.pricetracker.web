@@ -1,5 +1,5 @@
 window.CRAWL_META = {
-  "lastCrawledAt": "2026-07-24T22:52:14.045Z",
+  "lastCrawledAt": "2026-07-25T22:42:51.544Z",
   "status": "created",
   "sourceUrl": "https://cursor.com/docs/models-and-pricing.md"
 };
