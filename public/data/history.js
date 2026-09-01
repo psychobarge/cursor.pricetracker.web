@@ -35532,7 +35532,7 @@ window.PRICE_SNAPSHOTS = [
     ]
   },
   {
-    "crawledAt": "2026-09-01T00:53:08.832Z",
+    "crawledAt": "2026-09-01T23:39:42.641Z",
     "sourceUrl": "https://cursor.com/docs/models-and-pricing.md",
     "tables": [
       {
@@ -35627,7 +35627,16 @@ window.PRICE_SNAPSHOTS = [
             "cacheWrite": 12.5,
             "cacheRead": 1,
             "output": 50,
-            "notes": "Requires data retention approval for Enterprise customers, Teams and individual customers with Privacy Mode enabled; Anthropic stores agent input and output data for harm-prevention processes; this data is not used to train or improve Anthropic models or products; Requests that trip a security guardrail are automatically routed to Claude Opus; About 2x the cost of Claude Opus 5; Requires Max Mode on legacy request-based plans"
+            "notes": "Hidden by default; Requires data retention approval for Enterprise customers, Teams and individual customers with Privacy Mode enabled; Anthropic stores agent input and output data for harm-prevention processes; this data is not used to train or improve Anthropic models or products; Requests that trip a security guardrail are automatically routed to Claude Opus; About 2x the cost of Claude Opus 5; Requires Max Mode on legacy request-based plans"
+          },
+          {
+            "model": "Claude Fable 5.1",
+            "provider": "Anthropic",
+            "input": 10,
+            "cacheWrite": 12.5,
+            "cacheRead": 0.25,
+            "output": 50,
+            "notes": "Requires data retention approval for Enterprise customers, Teams and individual customers with Privacy Mode enabled; Anthropic stores agent input and output data for harm-prevention processes; this data is not used to train or improve Anthropic models or products; Requests that trip a security guardrail are automatically routed to Claude Opus; Prompt-cache reads are $0.25/M, 75% below the standard cache-read rate; About 2x the cost of Claude Opus 5 on input and output; Requires Max Mode on legacy request-based plans"
           },
           {
             "model": "Claude Opus 4.7 (fast mode)",
