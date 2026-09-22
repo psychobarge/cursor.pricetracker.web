@@ -44700,7 +44700,7 @@ window.PRICE_SNAPSHOTS = [
     ]
   },
   {
-    "crawledAt": "2026-09-22T00:22:10.982Z",
+    "crawledAt": "2026-09-22T22:29:49.157Z",
     "sourceUrl": "https://cursor.com/docs/models-and-pricing.md",
     "tables": [
       {
@@ -44804,7 +44804,7 @@ window.PRICE_SNAPSHOTS = [
             "cacheWrite": 12.5,
             "cacheRead": 0.25,
             "output": 50,
-            "notes": "Requires data retention approval for Enterprise customers, Teams and individual customers with Privacy Mode enabled; Anthropic stores agent input and output data for harm-prevention processes; this data is not used to train or improve Anthropic models or products; Requests that trip a security guardrail are automatically routed to Claude Opus; Prompt-cache reads are $0.25/M, 75% below the standard cache-read rate; About 2x the cost of Claude Opus 5 on input and output; Requires Max Mode on legacy request-based plans"
+            "notes": "Requires data retention approval for Enterprise customers, Teams and individual customers with Privacy Mode enabled; Anthropic stores agent input and output data for harm-prevention processes; this data is not used to train or improve Anthropic models or products; Requests that trip a security guardrail are automatically routed to Claude Opus; Prompt-cache reads are $0.25/M, 75% below the standard cache-read rate; About 2.5x the cost of Claude Opus 5.5 on input and output; Requires Max Mode on legacy request-based plans"
           },
           {
             "model": "Claude Opus 4.7 (fast mode)",
@@ -44831,7 +44831,16 @@ window.PRICE_SNAPSHOTS = [
             "cacheWrite": 6.25,
             "cacheRead": 0.5,
             "output": 25,
-            "notes": "Requires Max Mode on legacy request-based plans; Fast mode (\\`claude-opus-5-fast\\`) requires Max Mode on legacy request-based plans; Up to 1M tokens with extended context at the same per-token rates (no long-context surcharge)"
+            "notes": "Hidden by default; Requires Max Mode on legacy request-based plans; Fast mode (\\`claude-opus-5-fast\\`) requires Max Mode on legacy request-based plans; Up to 1M tokens with extended context at the same per-token rates (no long-context surcharge)"
+          },
+          {
+            "model": "Claude Opus 5.5",
+            "provider": "Anthropic",
+            "input": 4,
+            "cacheWrite": 5,
+            "cacheRead": 0.2,
+            "output": 20,
+            "notes": "Requires Max Mode on legacy request-based plans; Fast mode (\\`claude-opus-5-5-fast\\`) requires Max Mode on legacy request-based plans; 20% cheaper than Claude Opus 5 on input and output; Prompt-cache reads are $0.20/M (0.05x input), down from 0.10x input on Claude Opus 5; Regional and US-only endpoints are priced 10% higher ($4.40/M input, $22/M output); Up to 1M tokens with extended context at the same per-token rates (no long-context surcharge)"
           },
           {
             "model": "Claude Sonnet 5",
